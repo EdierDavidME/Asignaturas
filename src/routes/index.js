@@ -7,6 +7,14 @@ router.get('/', (req, res) => {
     res.render('index');
 });
 
+router.get('/eliminar', (req, res) => {
+    res.render('eliminar');
+});
+
+router.get('/listarCA', (req, res) => {
+    res.render('listaCursos');
+});
+
 router.get('/registro', (req, res) => {
     res.render('registro');
 });

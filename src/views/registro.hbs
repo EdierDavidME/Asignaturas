@@ -1,24 +1,32 @@
 {{>header}}
 {{!-- {{{crear}}} --}}
+
 <div class="text-center mt-5">
-    <form style="max-width:480px;margin:auto;"  method="POST" action="/registro">
+    <form style="max-width:480px;margin:auto;">
         <img class="mt-4 mb-4" src="img/logo.png" heigt="72" alt="">
-        <h1 class="h3 mb-3 font-weight-normal">Llena los todos campos </h1>
-        <label for="name" class="sr-only">Cedula</label>
-        <input type="number" id="cc" name="cc" class="form-control" placeholder="Ingrese su documento" required
-            autofocus>
+        <h1 class="h3 mb-3 font-weight-normal">llena los todos campos </h1>
         <label for="name" class="sr-only">Nombre</label>
-        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese su nombre" required>
+        <input type="text" id="nombre" class="form-control" placeholder="Ingrese su nombre" required autofocus>
+        <label for="name" class="sr-only">Segundo Nombre</label>
+        <input type="text" id="nombre" class="form-control" placeholder="Ingrese su segundo nombre" required autofocus>
+        <label for="name" class="sr-only">apellido</label>
+        <input type="emailAdress" id="Email" class="form-control" placeholder="apellidos" required autofocus>
         <label for="name" class="sr-only">Email</label>
-        <input type="text" id="correo" name="correo" class="form-control" placeholder="Ingrese un email adress"
-            required>
-        <label for="name" class="sr-only">Telefono</label>
-        <input type="text" id="tel" name="tel" class="form-control" placeholder="Ingrese un email adress" required>
+        <input type="text" id="nombre" class="form-control" placeholder="Ingrese un emailAdress" required autofocus>
+        <lable for="password" calss="sr-only">Cedula</lable>
+        <input tupe="password" id="password" placeholder="cedula" class="form-control">
+        <!--info curso-->
+        <h1 class="h3 mb-3 font-weight-normal">Informacion sobre el curso que te interesa</h1>
+        <input tupe="password" id="password" placeholder="Nombre" class="form-control">
+        <input tupe="password" id="password" placeholder="codigo" class="form-control">
+        <h2 class="h3 mb-3 font-weight-normal">modalidad</h2>
+        <select name="select" placeholder="modalidad">
+            <option value="value1">virtual</option>
+            <option value="value2" selected>presencial</option>
+        </select>
         <div class="checkbox">
             <label>
                 <input type="checkbox" value="remember-me">remember me
-
-
             </label>
 
         </div>
