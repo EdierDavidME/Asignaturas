@@ -61,7 +61,7 @@ hbs.registerHelper('crear', (user) => {
 
 const cargarData = () => {
     try {
-        usuariosRegistro = require('../usuarios.json');
+        usuariosRegistro = require('../../usuarios.json');
     } catch (error) {
         console.log(error);
         console.log("Error carga");
@@ -73,7 +73,6 @@ const save = () => {
     let informacion = JSON.stringify(usuariosRegistro);
     fs.writeFile('./usuarios.json', informacion, 'utf8', (err) => {
         if (err) throw (err);
-        console.log("Algo pasa con el fichero");
         console.log(err);
     })
 }
