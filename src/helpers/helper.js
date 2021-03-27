@@ -38,8 +38,8 @@ hbs.registerHelper('listaEstudiantesCurso', () => {
         texto += "<table border='2' class='table table-bordered'>\
                     <thead>\
                     <tr class ='table-primary'>\
-                    <th colspan='2'>Curso:" + curso.nombre + "</th>\
-                    <th colspan='3'>Codigo:" + curso.codigo + "</th>\
+                    <th colspan='2'>Curso: " + curso.nombre + "</th>\
+                    <th colspan='3'>Codigo: " + curso.codigo + "</th>\
                     </tr>\
                     <tr>\
                     <th>Estudiante</th>\
