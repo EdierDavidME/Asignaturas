@@ -5,37 +5,7 @@ const app = express();
 
 
 usuariosRegistro = [];
-
-// hbs.registerHelper('listarCursos', () => {
-//     // habilitados();
-//     let texto = "<table border='2'>\
-//    <thead>\
-//    <th>id</th>\
-//    <th>Nombre</th>\
-//    <th>Descripción</th>\
-//    <th>Valor</th>\
-//    </thead>\
-//    <tbody>";
-
-//     let disponibles = cursos.filter(dis => dis.estado == "Disponible");
-//     if (disponibles.length == 0) {
-//         return ('No hay cursos disponibles');
-//     } else {
-//         disponibles.forEach(curso => {
-//             texto = texto +
-//                 '<tr>' +
-//                 '<td>' + curso.id + '</td>' +
-//                 '<td>' + curso.nombre + '</td>' +
-//                 '<td>' + curso.descripcion + '</td>' +
-//                 '<td>' + curso.valor + '</td></tr>' +
-//                 '<td>' + curso.modalidad + '</td>' +
-//                 '<td>' + curso.intensidad + '</td>' +
-//                 '<td>' + curso.estado + '</td>';
-//         });
-//         texto = texto + '</tbody></table>';
-//         return texto;
-//     };
-// });
+cursosRegistro = [];
 
 hbs.registerHelper('crear', (user) => {
     cargarData();
@@ -59,14 +29,217 @@ hbs.registerHelper('crear', (user) => {
 
 });
 
+hbs.registerHelper('actualizar', (codigo) => {
+    cargarDataCurso();
+    var propiedad = codigo
+    let duplicado = cursosRegistro.find(curso => curso.codigo == codigo)
+    if (!duplicado) {
+        return (" El curso no existe. ");
+    } else {
+        console.log(duplicado);
+        let ilimin = cursosRegistro.filter(actualizarCurso => actualizarCurso.codigo != codigo)
+        if (ilimin.length == cursosRegistro.length) {
+            console.log('El codigo del curso no se ha encontrado');
+        } else {
+            cursosRegistro = ilimin;
+            let sw = "Disponible";
+
+            if (duplicado.estado == "Disponible") {
+                sw = "No disponible";
+            }
+
+            let data = {
+                nombre: duplicado.nombre,
+                codigo: duplicado.codigo,
+                ccProfe: duplicado.ccProfe,
+                profe: duplicado.profe,
+                desc: duplicado.desc,
+                modalidad: duplicado.modalidad,
+                estado: sw,
+                duracion: duplicado.duracion,
+                costo: duplicado.costo
+            }
+            cursosRegistro.push(data);
+            guardarCursos();
+            return ('Se ha modificado correctamente el estado del curso.');
+        };
+
+
+    }
+});
+
+hbs.registerHelper('actualizarModo', (codigo) => {
+    cargarDataCurso();
+    let duplicado = cursosRegistro.find(curso => curso.codigo == codigo)
+    if (!duplicado) {
+        return (" El curso no existe. ");
+    } else {
+        console.log(duplicado);
+        let ilimin = cursosRegistro.filter(actualizarCurso => actualizarCurso.codigo != codigo)
+        if (ilimin.length == cursosRegistro.length) {
+            console.log('El codigo del curso no se ha encontrado');
+        } else {
+            cursosRegistro = ilimin;
+            let sw = "Virtual";
+
+            if (duplicado.modalidad == "Virtual") {
+                sw = "Presencial";
+            }
+
+            let data = {
+                nombre: duplicado.nombre,
+                codigo: duplicado.codigo,
+                ccProfe: duplicado.ccProfe,
+                profe: duplicado.profe,
+                desc: duplicado.desc,
+                modalidad: sw,
+                estado: duplicado.estado,
+                duracion: duplicado.duracion,
+                costo: duplicado.costo
+            }
+            console.log(data)
+            cursosRegistro.push(data);
+            guardarCursos();
+            return ('Se ha modificado correctamente el estado del curso.');
+        };
+
+
+    }
+});
+
+hbs.registerHelper('crearCurso', (curso) => {
+    cargarDataCurso();
+    let Curso = {
+        nombre: curso.nombre,
+        codigo: curso.codigo,
+        ccProfe: curso.ccProfe,
+        profe: curso.profe,
+        desc: curso.desc,
+        modalidad: curso.modalidad,
+        estado: curso.estado,
+        duracion: curso.duracion,
+        costo: curso.costo
+    };
+    let duplicado = cursosRegistro.find(ofCurso => ofCurso.codigo == Curso.codigo);
+    console.log("Existe: ", duplicado);
+    if (!duplicado && Curso.nombre) {
+        cursosRegistro.push(Curso);
+        console.log("Cursos Listos: ", cursosRegistro);
+        console.log("Nuevos:", Curso);
+        guardarCursos();
+        return (" ha sido registrado exitosamente. ")
+    } else {
+        return ('no pudo ser registrado. Ya existe otro curso registrado con el mismo codigo');
+    }
+
+});
+
+hbs.registerHelper('listaCursos', () => {
+    cargarDataCurso();
+    let texto = "<table border='2' class='table table-bordered'>\
+                <thead>\
+                <th>Curso</th>\
+                <th>Codigo</th>\
+                <th>Docente</th>\
+                <th>CC Docente</th>\
+                <th>Descripcion</th>\
+                <th>Modalidad</th>\
+                <th>Valor</th>\
+                <th>Duracion</th>\
+                <th>Estado</th>\
+                <th></th>\
+                </thead>\
+                <tbody>";
+
+    cursosRegistro.forEach(curso => {
+        texto = texto +
+            '<tr class= "">' +
+            '<td>' + curso.nombre + '</td>' +
+            '<td>' + curso.codigo + '</td>' +
+            '<td>' + curso.profe + '</td>' +
+            '<td>' + curso.ccProfe + '</td>' +
+            '<td>' + curso.desc + '</td>' +
+            '<td> <form action="/actualizarModalidad' + curso.codigo + ' " method="post"><button type="submit " name="cambio " value="">' + curso.modalidad + '</button></form></td>' +
+            '<td>' + curso.costo + '</td>' +
+            '<td>' + curso.duracion + '</td>' +
+            '<td> <form action="/actualizarEstado' + curso.codigo + ' " method="post"><button type="submit " name="cambio " value="">' + curso.estado + '</button></form></td>' +
+            '<td>' +
+            '<div class="mt-1">' +
+            '<a href="/EliminarCurso' + curso.codigo + '" class="btn btn-lg btn-primary btn-block bg-danger">Eliminar</a>' +
+            ' </div>' +
+            '</td> </tr>';
+    })
+    texto = texto + '</tbody></table>';
+    return texto;
+});
+
+
+hbs.registerHelper('listarCursosAspirante', () => {
+    cargarDataCurso();
+    let texto = "<table border='2' class='table'>\
+                <thead>\
+                <th>Curso</th>\
+                <th>Codigo</th>\
+                <th>Modalidad</th>\
+                <th>Valor</th>\
+                <th>Duracion</th>\
+                <th>Estado</th>\
+                </thead>\
+                <tbody>";
+
+    cursosRegistro.forEach(curso => {
+        texto = texto +
+            '<tr>' +
+            '<td>' + curso.nombre + '</td>' +
+            '<td>' + curso.codigo + '</td>' +
+            '<td>' + curso.modalidad + '</td>' +
+            '<td>' + curso.costo + '</td>' +
+            '<td>' + curso.duracion + '</td>' +
+            '<td>' + curso.estado + '</td></tr>';
+    })
+    texto = texto + '</tbody></table>';
+    return texto;
+});
+
+hbs.registerHelper('eliminarCurso', (codigo) => {
+    cargarDataCurso();
+    let insc = cursosRegistro.filter(eCurso => eCurso.codigo != codigo);
+    console.log("Data nueva: ", insc);
+
+    if (insc.length == cursosRegistro.length) {
+        console.log('El codigo del curso no se ha encontrado');
+    } else {
+        console.log("Data nueva: ", insc);
+        cursosRegistro = insc;
+        guardarCursos();
+        return ('Usted ha eliminado el curso seleccionado.');
+    };
+
+});
+
 const cargarData = () => {
     try {
         usuariosRegistro = require('../../usuarios.json');
     } catch (error) {
-        console.log(error);
-        console.log("Error carga");
         usuariosRegistro = [];
     }
+}
+
+const cargarDataCurso = () => {
+    try {
+        cursosRegistro = require('../../cursos.json');
+        // console.log("Cursos Listos");
+    } catch (error) {
+        // console.log(error);
+        cursosRegistro = [];
+    }
+}
+
+const guardarCursos = () => {
+    let informacion = JSON.stringify(cursosRegistro);
+    fs.writeFile('./cursos.json', informacion, 'utf8', (err) => {
+        if (err) throw (err);
+    })
 }
 
 const save = () => {
