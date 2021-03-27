@@ -40,7 +40,7 @@ router.get('/eliminarCurso:id', (req, res) => {
     res.render('eliminarCurso', {
         codigo: id,
     });
-})
+});
 
 router.get('/EliminarEstudiante:id', (req, res) => {
     const id = req.params.id;

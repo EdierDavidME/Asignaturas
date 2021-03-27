@@ -57,7 +57,7 @@ hbs.registerHelper('listaEstudiantesCurso', () => {
                     '<td>' + user.nombre + '</td>' +
                     '<td>' + user.cc + '</td>' +
                     '<td>' + user.tel + '</td>' +
-                    '<td>' + user.asignatura + '</td>' +
+                    '<td>' + user.correo + '</td>' +
                     '<td>' +
                     '<div class="mt-1">' +
                     '<a href="/EliminarEstudiante' + user.cc + '" class="btn btn-lg btn-primary btn-block bg-danger">Eliminar</a>' +
@@ -226,7 +226,7 @@ hbs.registerHelper('listaCursos', () => {
             '<td> <form action="/actualizarModalidad' + curso.codigo + ' " method="post"><button type="submit " name="cambio " value="">' + curso.modalidad + '</button></form></td>' +
             '<td>' + curso.costo + '</td>' +
             '<td>' + curso.duracion + '</td>' +
-            '<td> <form action="/actualizarEstado' + curso.codigo + ' " method="post"><button type="submit " name="cambio " value="">' + curso.estado + '</button></form></td>' +
+            '<td> <form action="/actualizarEstado' + curso.codigo + '" method="post"><button type="submit " name="cambio " value="">' + curso.estado + '</button></form></td>' +
             '<td>' +
             '<div class="mt-1">' +
             '<a href="/EliminarCurso' + curso.codigo + '" class="btn btn-lg btn-primary btn-block bg-danger">Eliminar</a>' +
