@@ -124,7 +124,7 @@ hbs.registerHelper('actualizar', (codigo) => {
             }
             cursosRegistro.push(data);
             guardarCursos();
-            return ('Se ha modificado correctamente el estado del curso.');
+            return ('Se ha modificado correctamente el estado del curso: ' + data.nombre);
         };
 
 
@@ -163,7 +163,8 @@ hbs.registerHelper('actualizarModo', (codigo) => {
             console.log(data)
             cursosRegistro.push(data);
             guardarCursos();
-            return ('Se ha modificado correctamente el estado del curso.');
+            r = "El curso " + data.nombre + " ha cambiado de modalidad Corectamente.";
+            return (r);
         };
 
 
