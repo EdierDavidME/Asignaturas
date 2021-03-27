@@ -42,6 +42,13 @@ router.get('/eliminarCurso:id', (req, res) => {
     });
 })
 
+router.get('/EliminarEstudiante:id', (req, res) => {
+    const id = req.params.id;
+    res.render('eliminarEstudiante', {
+        cc: id,
+    });
+})
+
 router.get('/registro', (req, res) => {
     res.render('registro');
 });
@@ -64,10 +71,11 @@ router.post('/registro', (req, res) => {
     res.render('existe', {
         user: {
             nombre: req.body.nombre,
-            // rol: req.body.rol,
-            documento: req.body.cc,
-            telefono: req.body.tel,
-            correo: req.body.correo
+            rol: req.body.rol,
+            cc: req.body.cc,
+            tel: req.body.tel,
+            correo: req.body.correo,
+            asignatura: req.body.asignatura
         }
     });
 });

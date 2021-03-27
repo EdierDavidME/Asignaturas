@@ -2,39 +2,37 @@
 {{!-- {{{crear}}} --}}
 
 <div class="text-center mt-5">
-    <form style="max-width:480px;margin:auto;">
+    <form style="max-width:480px;margin:auto;" action="/registro" method="POST">
         <img class="mt-4 mb-4" src="img/logo.png" heigt="72" alt="">
-        <h1 class="h3 mb-3 font-weight-normal">llena los todos campos </h1>
-        <label for="name" class="sr-only">Nombre</label>
-        <input type="text" id="nombre" class="form-control" placeholder="Ingrese su nombre" required autofocus>
-        <label for="name" class="sr-only">Segundo Nombre</label>
-        <input type="text" id="nombre" class="form-control" placeholder="Ingrese su segundo nombre" required autofocus>
-        <label for="name" class="sr-only">apellido</label>
-        <input type="emailAdress" id="Email" class="form-control" placeholder="apellidos" required autofocus>
-        <label for="name" class="sr-only">Email</label>
-        <input type="text" id="nombre" class="form-control" placeholder="Ingrese un emailAdress" required autofocus>
-        <lable for="password" calss="sr-only">Cedula</lable>
-        <input tupe="password" id="password" placeholder="cedula" class="form-control">
+        <h1 class="h3 mb-3 font-weight-normal">Llena los todos campos </h1>
+        <label for="nombre" class="sr-only">Nombre</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese su nombre" required
+            autofocus>
+        <lable for="cc" calss="sr-only">Cedula</lable>
+        <input type="number" id="cc" name="cc" placeholder="Cedula" class="form-control">
+        <label for="correo" class="sr-only">Email</label>
+        <input type="email" id="correo" name="correo" class="form-control" placeholder="Ingrese un correo" required
+            autofocus>
+        <label for="tel" class="sr-only">Teléfono</label>
+        <input type="number" id="tel" name="tel" class="form-control" placeholder="Ingrese su télefono" required
+            autofocus>
         <!--info curso-->
-        <h1 class="h3 mb-3 font-weight-normal">Informacion sobre el curso que te interesa</h1>
-        <input tupe="password" id="password" placeholder="Nombre" class="form-control">
-        <input tupe="password" id="password" placeholder="codigo" class="form-control">
-        <h2 class="h3 mb-3 font-weight-normal">modalidad</h2>
-        <select name="select" placeholder="modalidad">
-            <option value="value1">virtual</option>
-            <option value="value2" selected>presencial</option>
-        </select>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me">remember me
-            </label>
+        <input type="hidden" id="rol" name="rol" class="form-control" value="Estudiante">
+        <h1 class="h3 mb-3 font-weight-normal">Seleciona el curso</h1>
+        {{!-- Selecionar curso --}}
 
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-10">
+                    {{{cargaCursos}}}
+                </div>
+            </div>
         </div>
+
+        {{!-- Modaldiad Curso --}}
         <div class="mt-3">
-            <button class="btn btn-lg btn-primary btn-block">Registrar</button>
+            <button type="submit" class="btn btn-lg btn-primary btn-block w-50">Registrarme</button>
         </div>
-
-
     </form>
 </div>
 {{>footer}}

@@ -11,12 +11,13 @@ hbs.registerHelper('crear', (user) => {
     cargarData();
     let User = {
         nombre: user.nombre,
-        // rol: user.rol,
-        documento: user.documento,
-        telefono: user.telefono,
-        correo: user.correo
+        rol: user.rol,
+        cc: user.cc,
+        tel: user.tel,
+        correo: user.correo,
+        asignatura: user.asignatura
     };
-    let duplicado = usuariosRegistro.find(nom => nom.documento == User.documento);
+    let duplicado = usuariosRegistro.find(nom => nom.cc == User.cc);
     console.log("Existe: ", duplicado);
     if (!duplicado && User.nombre) {
         usuariosRegistro.push(User);
@@ -28,6 +29,68 @@ hbs.registerHelper('crear', (user) => {
     }
 
 });
+
+hbs.registerHelper('listaEstudiantesCurso', () => {
+    cargarDataCurso();
+    cargarData();
+    let texto = "";
+    cursosRegistro.forEach(curso => {
+        texto += "<table border='2' class='table table-bordered'>\
+                    <thead>\
+                    <tr class ='table-primary'>\
+                    <th colspan='2'>Curso:" + curso.nombre + "</th>\
+                    <th colspan='3'>Codigo:" + curso.codigo + "</th>\
+                    </tr>\
+                    <tr>\
+                    <th>Estudiante</th>\
+                    <th>Documento</th>\
+                    <th>Télefono</th>\
+                    <th>Correo</th>\
+                    <th></th>\
+                    <tr>\
+                    </thead>\
+                    <tbody>";
+        usuariosRegistro.forEach(user => {
+            if (user.asignatura == curso.codigo) {
+                texto = texto +
+                    '<tr class= "">' +
+                    '<td>' + user.nombre + '</td>' +
+                    '<td>' + user.cc + '</td>' +
+                    '<td>' + user.tel + '</td>' +
+                    '<td>' + user.asignatura + '</td>' +
+                    '<td>' +
+                    '<div class="mt-1">' +
+                    '<a href="/EliminarEstudiante' + user.cc + '" class="btn btn-lg btn-primary btn-block bg-danger">Eliminar</a>' +
+                    ' </div>' +
+                    '</td> </tr>';
+            }
+        });
+
+        texto += '</tbody></table>';
+    });
+    return texto;
+});
+
+
+hbs.registerHelper('eliminarEstudiantesCurso', (cc) => {
+    cargarData();
+    console.log("CC: ", cc);
+    let insc = usuariosRegistro.filter(estudiante => estudiante.cc != cc);
+    console.log("Data nueva: ", insc);
+
+    if (insc.length == usuariosRegistro.length) {
+        console.log('La cedula del estudiantes no se ha encontrado');
+        return "La cedula del estudiantes no se ha encontrado";
+    } else {
+        console.log("Data nueva: ", insc);
+        usuariosRegistro = insc;
+        save();
+        return ('Usted ha eliminado el estudiante del curso seleccionado.');
+    };
+
+});
+
+
 
 hbs.registerHelper('actualizar', (codigo) => {
     cargarDataCurso();
@@ -170,6 +233,21 @@ hbs.registerHelper('listaCursos', () => {
             '</td> </tr>';
     })
     texto = texto + '</tbody></table>';
+    return texto;
+});
+
+
+hbs.registerHelper('cargaCursos', () => {
+    cargarDataCurso();
+    let estado = cursosRegistro.filter(eCurso => eCurso.estado == 'Disponible');
+    console.log(estado)
+    let texto = " <select required='required' name='asignatura' placeholder='Seleciona un curso' class='form-control'>";
+
+    estado.forEach(curso => {
+        texto = texto +
+            '<option value="' + curso.codigo + '">' + curso.nombre + '</option>';
+    })
+    texto = texto + '</select>';
     return texto;
 });
 
